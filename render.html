@@ -5,11 +5,22 @@
   <title>Marked in the browser</title>
 </head>
 <body>
+  <input type="text" id="url" name="url">
+  <button type="button" onclick="myonclick()">Click Me!</button>
   <div id="content"></div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    document.getElementById('content').innerHTML =
-      marked.parse('# Marked in the browser\n\nRendered by **marked**.');
+    function myonclick() {
+        // const url = "https://raw.githubusercontent.com/Merle-Zhang/JSMDRenderTest/main/testmd.md"
+        const url = document.getElementById("url").value;
+        fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('content').innerHTML =
+                marked.parse(data);
+        })
+        .catch(error => console.error(error))
+    }
   </script>
 </body>
 </html>
